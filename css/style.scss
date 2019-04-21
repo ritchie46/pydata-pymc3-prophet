@@ -11,8 +11,8 @@
  */
 
  // Default mixins and settings -----------------
-@import "reveal.js/css/theme/template/mixins";
-@import "reveal.js/css/theme/template/settings";
+@import "../reveal.js/css/theme/template/mixins";
+@import "./base-settings";
 // ---------------------------------------------
 
 // Include theme-specific fonts
@@ -48,7 +48,7 @@ $selectionColor: #fff;
 
 
 // Theme template ------------------------------
-@import "reveal.js/css/theme/template/theme";
+@import "./base-theme";
 // ---------------------------------------------
 
 // some overrides after theme template import
@@ -76,3 +76,4 @@ $selectionColor: #fff;
 .reveal small code {
     vertical-align: baseline;
 }
+
