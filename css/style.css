@@ -349,4 +349,15 @@ body {
   vertical-align: baseline;
 }
 
+.fill-parent {
+  width: 100%;
+  height: 100%;
+}
+
+.logo-left-top {
+  display: block;
+  top: 0;
+  left: 0;
+}
+
 /*# sourceMappingURL=style.css.map */

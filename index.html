@@ -25,11 +25,31 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
+		<section>
                     <h1># Facebook's Prophet in PyMC3</h1>
                 </section>
-				<section>Slide 2</section>
+		<section>
+			<h2> Assumptions</h2>
+			<div>
+				$$ P(\theta|D) = \frac{P(D|\theta)P(\theta)}{P(D)} $$
 			</div>
+		</section>
+		<section>
+			<h4>Humanly generated data</h4>
+			<img src="img/business-data.png"/>				
+		</section>
+		<section>
+				<h4>Handling this data</h4>
+			<div>
+				$$ \underbrace{\text{S}}_\text{seasonal} \overbrace{\text{AR}}^\text{auto-regressive} 
+				\underbrace{\text{I}}_\text{integrated} \overbrace{MA}^\text{moving average} 
+				\underbrace{\text{X}}_\text{exogenous} $$	
+			</div>		
+		</section>
+		<section class="fill-parent">
+				<img src="img/logo-prophet.png" class="logo-left-top" width="200px"/>
+		</section>
+		</div>
 		</div>
 
 		<script src="reveal.js/js/reveal.js"></script>
@@ -40,6 +60,7 @@
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
 				dependencies: [
+					{ src: 'reveal.js/plugin/math/math.js', async: true },
 					{ src: 'reveal.js/plugin/markdown/marked.js' },
 					{ src: 'reveal.js/plugin/markdown/markdown.js' },
 					{ src: 'reveal.js/plugin/notes/notes.js', async: true },
