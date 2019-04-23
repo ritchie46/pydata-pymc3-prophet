@@ -9,14 +9,11 @@
  * For other themes, change $codeBackground accordingly.
  *
  */
-
- // Default mixins and settings -----------------
+// Default mixins and settings -----------------
 @import "../reveal.js/css/theme/template/mixins";
 @import "./base-settings";
 // ---------------------------------------------
-
 // Include theme-specific fonts
-
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic,700italic);
 
 // Colors used in the theme
@@ -38,7 +35,7 @@ $heading1TextShadow: none;
 
 // Links
 $linkColor: $xomniaBlue;
-$linkColorHover: lighten( $linkColor, 20% );
+$linkColorHover: lighten($linkColor, 20%);
 
 // Text selection
 $selectionBackgroundColor: $xomniaBlue;
@@ -52,8 +49,8 @@ $selectionColor: #fff;
 // some overrides after theme template import
 
 .reveal p {
-    font-weight: 300;
-    text-shadow: 1px 1px $coal;
+  font-weight: 300;
+  text-shadow: 1px 1px $coal;
 }
 
 .reveal h1,
@@ -62,26 +59,53 @@ $selectionColor: #fff;
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .reveal p code {
-    background-color: $codeBackground;
-    display: inline-block;
-    border-radius: 7px;
+  background-color: $codeBackground;
+  display: inline-block;
+  border-radius: 7px;
 }
 
 .reveal small code {
-    vertical-align: baseline;
+  vertical-align: baseline;
 }
 
 .fill-parent {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .logo-left-top {
-	display: block;
-	top: 0;
-	left: 0;
+  display: block;
+  top: 0;
+  left: 0;
+}
+
+#sarimax-wrap {
+  position: relative;
+  left: 350px;
+  text-align: left;
+  font-family: "DejaVu Math TeX Gyre";
+  text-shadow: none;
+}
+
+.sarimax {
+  position: relative;
+  margin-left: 20px;
+  margin-right: 20px;
+  top: 7px;
+}
+
+b.sarimax {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  top: 0
+}
+
+.sarimax-shift{
+  position: relative;
+  top: -1em
 }

@@ -1,72 +1,95 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="reveal.js/css/reset.css">
-		<link rel="stylesheet" href="reveal.js/css/reveal.css">
-		<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="reveal.js/css/reset.css">
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="css/style.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="reveal.js/lib/css/monokai.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal.js/lib/css/monokai.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-		<section>
-                    <h1># Facebook's Prophet in PyMC3</h1>
-                </section>
-		<section>
-			<h2> Assumptions</h2>
-			<div>
-				$$ P(\theta|D) = \frac{P(D|\theta)P(\theta)}{P(D)} $$
-			</div>
-		</section>
-		<section>
-			<h4>Humanly generated data</h4>
-			<img src="img/business-data.png"/>				
-		</section>
-		<section>
-				<h4>Handling this data</h4>
-			<div>
-				$$ \underbrace{\text{S}}_\text{seasonal} \overbrace{\text{AR}}^\text{auto-regressive} 
-				\underbrace{\text{I}}_\text{integrated} \overbrace{MA}^\text{moving average} 
-				\underbrace{\text{X}}_\text{exogenous} $$	
-			</div>		
-		</section>
-		<section class="fill-parent">
-				<img src="img/logo-prophet.png" class="logo-left-top" width="200px"/>
-		</section>
-		</div>
-		</div>
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1># Facebook's Prophet in PyMC3</h1>
+        </section>
+        <section>
+            <h4>Humanly generated data</h4>
+            <img src="img/business-data.png"/>
+        </section>
+        <section>
+            <h4>Handling this data</h4>
 
-		<script src="reveal.js/js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'reveal.js/plugin/math/math.js', async: true },
-					{ src: 'reveal.js/plugin/markdown/marked.js' },
-					{ src: 'reveal.js/plugin/markdown/markdown.js' },
-					{ src: 'reveal.js/plugin/notes/notes.js', async: true },
-					{ src: 'reveal.js/plugin/highlight/highlight.js', async: true }
-				]
-			});
-		</script>
-	</body>
+            <p id="sarimax-wrap">
+
+                <b class="sarimax">S</b> <small class="sarimax">seasonal</small> <br>
+                <br>
+                <b class="sarimax">A</b> <br>
+                <b class="sarimax">R</b> <small class="sarimax sarimax-shift">auto-regressive</small> <br>
+                <br>
+                <b class="sarimax">I</b> <small class="sarimax">integrated</small> <br>
+                <br>
+                <b class="sarimax">M</b> <br>
+                <b class="sarimax">A</b> <small class="sarimax sarimax-shift">moving average</small> <br>
+                <br>
+                <b class="sarimax">X</b> <small class="sarimax">exogenous</small>
+            </p>
+        </section>
+        <section class="fill-parent">
+            <img src="img/logo-prophet.png" class="logo-left-top" width="200px"/>
+            <br>
+            <h4>Generalized Additive Models</h4>
+            <br>
+            <br>
+            <div>
+                $$ y(t) = \underbrace{g(t)}_{\text{trend}} +
+                \underbrace{s(t)}_\text{seasonality} +
+                \underbrace{h(t)}_\text{holiday effects} + \epsilon_t $$
+            </div>
+        </section>
+        <section>
+            <h4>Set </h4>
+            <div>
+                $$ \underbrace{P(\theta|D)}_\text{posterior} =
+                \frac{ \overbrace{P(D|\theta)}^{\text{likelihood}} \cdot \overbrace{P(\theta)}^{\text{prior}} }
+                { \underbrace{P(D)}_{\text{marginal likelihood}} }$$
+            </div>
+
+        </section>
+    </div>
+</div>
+
+<script src="reveal.js/js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        dependencies: [
+            {src: 'reveal.js/plugin/math/math.js', async: true},
+            {src: 'reveal.js/plugin/markdown/marked.js'},
+            {src: 'reveal.js/plugin/markdown/markdown.js'},
+            {src: 'reveal.js/plugin/notes/notes.js', async: true},
+            {src: 'reveal.js/plugin/highlight/highlight.js', async: true}
+        ]
+    });
+</script>
+</body>
 </html>

@@ -360,4 +360,31 @@ body {
   left: 0;
 }
 
+#sarimax-wrap {
+  position: relative;
+  left: 350px;
+  text-align: left;
+  font-family: "DejaVu Math TeX Gyre";
+  text-shadow: none;
+}
+
+.sarimax {
+  position: relative;
+  margin-left: 20px;
+  margin-right: 20px;
+  top: 7px;
+}
+
+b.sarimax {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  top: 0;
+}
+
+.sarimax-shift {
+  position: relative;
+  top: -1em;
+}
+
 /*# sourceMappingURL=style.css.map */
