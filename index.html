@@ -28,33 +28,38 @@
         <section>
             <h1># Facebook's Prophet in PyMC3</h1>
         </section>
-        <section>
+        <section class="default-aspect-ratio">
             <h4>Humanly generated data</h4>
             <img src="img/business-data.png"/>
         </section>
         <section>
             <h4>Handling this data</h4>
-
-
-            <p id="sarimax-wrap">
-
-                <b class="sarimax">S</b> <small class="sarimax">seasonal</small> <br>
+            <p id="sarimax-wrap" >
+                <b class="sarimax">S</b>
+                <small class="sarimax">seasonal</small>
+                <br>
                 <br>
                 <b class="sarimax">A</b> <br>
-                <b class="sarimax">R</b> <small class="sarimax sarimax-shift">auto-regressive</small> <br>
+                <b class="sarimax">R</b>
+                <small class="sarimax sarimax-shift">auto-regressive</small>
                 <br>
-                <b class="sarimax">I</b> <small class="sarimax">integrated</small> <br>
+                <br>
+                <b class="sarimax">I</b>
+                <small class="sarimax">integrated</small>
+                <br>
                 <br>
                 <b class="sarimax">M</b> <br>
-                <b class="sarimax">A</b> <small class="sarimax sarimax-shift">moving average</small> <br>
+                <b class="sarimax">A</b>
+                <small class="sarimax sarimax-shift">moving average</small>
                 <br>
-                <b class="sarimax">X</b> <small class="sarimax">exogenous</small>
+                <br>
+                <b class="sarimax">X</b>
+                <small class="sarimax">exogenous</small>
             </p>
         </section>
         <section class="fill-parent">
             <img src="img/logo-prophet.png" class="logo-left-top" width="200px"/>
-            <br>
-            <h4>Generalized Additive Models</h4>
+            <h4 class="lower-title">Generalized Additive Models</h4>
             <br>
             <br>
             <div>
@@ -63,8 +68,10 @@
                 \underbrace{h(t)}_\text{holiday effects} + \epsilon_t $$
             </div>
         </section>
-        <section>
-            <h4>Set </h4>
+        <section class="fill-parent">
+            <img src="img/PyMC3_banner.svg" class="logo-left-top" style="background: white;" width="200px"/>
+
+            <h4 class="lower-title">Bayesian Curve Fitting w/ PYMC3</h4>
             <div>
                 $$ \underbrace{P(\theta|D)}_\text{posterior} =
                 \frac{ \overbrace{P(D|\theta)}^{\text{likelihood}} \cdot \overbrace{P(\theta)}^{\text{prior}} }
@@ -90,6 +97,7 @@
             {src: 'reveal.js/plugin/highlight/highlight.js', async: true}
         ]
     });
+
 </script>
 </body>
 </html>

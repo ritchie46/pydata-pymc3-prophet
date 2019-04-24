@@ -355,9 +355,10 @@ body {
 }
 
 .logo-left-top {
+  position: fixed;
   display: block;
   top: 0;
-  left: 0;
+  left: -200px;
 }
 
 #sarimax-wrap {
@@ -366,6 +367,7 @@ body {
   text-align: left;
   font-family: "DejaVu Math TeX Gyre";
   text-shadow: none;
+  font-size: 30px;
 }
 
 .sarimax {
@@ -385,6 +387,10 @@ b.sarimax {
 .sarimax-shift {
   position: relative;
   top: -1em;
+}
+
+.lower-title {
+  padding-top: 35px;
 }
 
 /*# sourceMappingURL=style.css.map */
