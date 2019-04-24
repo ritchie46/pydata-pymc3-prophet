@@ -2,3 +2,5 @@ reveal.js/
 .idea/
 *.map
 MathJax-master/
+*.csv
+.ipynb_checkpoints/
