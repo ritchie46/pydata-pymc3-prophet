@@ -393,4 +393,13 @@ b.sarimax {
   padding-top: 35px;
 }
 
+.no-bullet > li {
+  display: list-item;
+  list-style: none;
+}
+
+.math-font {
+  font-family: "DejaVu Math TeX Gyre";
+}
+
 /*# sourceMappingURL=style.css.map */
