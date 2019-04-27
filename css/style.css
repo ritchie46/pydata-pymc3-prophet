@@ -432,4 +432,10 @@ i {
   font-size: 35px;
 }
 
+#xomnia-logo {
+  position: fixed;
+  height: 200px;
+  bottom: 0;
+}
+
 /*# sourceMappingURL=style.css.map */
