@@ -3,4 +3,5 @@ reveal.js/
 *.map
 MathJax-master/
 *.csv
+.ipynb_checkpoints/
 css/androidstudio.css
