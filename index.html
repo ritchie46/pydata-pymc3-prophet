@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="reveal.js/lib/css/monokai.css">
+    <link rel="stylesheet" href="css/androidstudio.css">
 
     <!-- Printing and PDF exports -->
     <script>
@@ -81,9 +81,6 @@
         <section>
             <h4>Changepoints $g(t)$</h4>
             <img src="img/ts-changepoint.png">
-            <div>
-                $$ S
-            </div>
         </section>
         <section>
             <h4>Changepoints breakdown</h4>
@@ -102,47 +99,169 @@
             <br>
             <ul class="no-bullet math-font">
                 <li>Changepoints in vector <span style="padding-left:6em">$S$</span></li>
-                <li>Growth change adjustment vector <span style="padding-left:0.5em">$\delta \in \mathbb{R}^S$</span></li>
+                <li>Growth change adjustment vector <span style="padding-left:0.5em">$\delta \in \mathbb{R}^S$</span>
+                </li>
             </ul>
             <br>
             <br>
             <div class="math-font">
-                for every timestep $t$
-                $$  k + \sum_{j: t > s_j} \delta_j $$
+                for every timestep $t$:
+                <br>
+                <br>
+                $$ k + \sum_{j: t > s_j} \delta_j $$
+                <div id="dot-product-note">dot product</div>
             </div>
         </section>
         <section>
-            <h4>Changepoints breakdown</h4>
-            <br>
-            <div>
+            <h4>Changepoints breakdown: <i>vectorized</i></h4>
+            <div class="row-flex">
+                <div class="slide-vectorized-changepoints-item">
+                    $$ a(t) \in \{0, 1\}^S$$
+                </div>
+                <div class="slide-vectorized-changepoints-item">
+                    $$ a(t)=
 
+                    \begin{cases}
+                    1, & \text{if } t\geq s_j, \\
+                    0, & \text{otherwise}
+                    \end{cases}
+                    $$
+                </div>
+            </div>
+            <div>
+                $$
+                k + a(t)^T \delta
+                $$
             </div>
         </section>
+        <section>
+            <h4>Changepoints breakdown: <i>vectorized</i></h4>
+            <br>
+            <div class="math-font">Rewrite the whole function $a(t)^T$ in a matrix $A$</div>
+            <br>
+            <div class="math-font" style="font-size: 20px">Example: Let $S$ be $2, 5, 8$ and let $t$ be $1, 2, \dots, 10$</div>
+            <div style="font-size: 20px">
+                $$
+                 A =
+ \begin{bmatrix}
+     t_{1} \geq s_1  & t_{1} \geq s_2  & \dots  & t_{1} \geq s_n \\
+     t_{2} \geq s_1  & t_{2} \geq s_2  & \dots  & t_{2} \geq s_n \\
+     \vdots       & \vdots       & \ddots & \vdots      \\
+     t_{k} \geq s1  & t_{k} \geq s_2 & \dots  & t_{k} \geq s_n
+ \end{bmatrix}
+ =
+
+  \begin{bmatrix}
+      1 \geq 2     & 1 \geq 5  & 1 \geq 8 \\
+      2 \geq 2     & 2 \geq 5  & 2 \geq 8 \\
+      \vdots       & \vdots    & \vdots   \\
+      10 \geq 2    & 10 \geq 5 & 10 \geq 8
+  \end{bmatrix}
+
+ =
+
+  \begin{bmatrix}
+      0       &  0        & 0 \\
+      1       &  0        & 0 \\
+   \vdots  & \vdots    & \vdots   \\
+      1       &  1        & 1
+  \end{bmatrix}
+$$
+            </div>
+
+        </section>
+        <section >
+            <h4>Changepoints breakdown: <i style="text-transform: none">numpy</i></h4>
+            <div class="row-flex" style="width: 100%">
+                <div>
+            	    <pre style="box-shadow: unset; font-size: 12px; width: 100%; ">
+                        <code class="python" style="overflow: hidden;">
+np.random.seed(25)
+n_changepoints = 10
+t = np.arange(1000)
+s = np.sort(np.random.choice(t, n_changepoints, replace=False))
+
+A = (t[:, None] > s) * 1
+delta = np.random.normal(size=n_changepoints)
+k = 1
+m = 5
+
+growth = (k + np.dot(A, delta)) * t
+gamma = -s * delta
+offset = m + np.dot(A, gamma)
+trend = growth + offset
+
+                        </code>
+                    </pre>
+                </div>
+                <div>
+                    <img src="img/piecewise-trend.png" style="height: 250px; position: relative; top: 20px; margin-left: 40px">
+                </div>
+            </div>
+        </section>
+        <section>
+            <h4>Changepoints breakdown: <i style="text-transform: none">PyMC3</i></h4>
+            <div class="row-flex">
+                <div style="font-size: 20px">
+                    $$ k \sim N(0, 5) $$
+                    $$ \delta \sim Laplace(0, 0.05) $$
+                    $$ m \sim N(0, 5) $$
+                    $$ g|k, \delta, m = (k + A \delta) \odot t + (m + A (-s \odot \delta)) $$
+                    $$ \sigma \sim N(0, 0.5) $$
+                    $$ y| g, \sigma \sim N(g, \sigma) $$
+                </div>
+                <div>
+                                	    <pre style="box-shadow: unset; font-size: 12px; width: 100%; margin-left: 20px">
+                        <code class="python" style="overflow: hidden;">
+# * 1 casts the boolean to integers
+A = (t[:, None] > s) * 1
+
+with pm.Model():
+    # initial growth
+    k = pm.Normal('k', 0 , 5)
+
+    # rate of change
+    delta = pm.Laplace('delta', 0, 0.05, shape=n_changepoints)
+    # offset
+    m = pm.Normal('m', 0, 5)
+    gamma = -s * delta
+
+    g = (k + tt.dot(A, delta)) * t + (m + tt.dot(A, gamma))
+    sigma = pm.HalfCauchy('sigma', 0.5)
+    observed =  pm.Normal('obs', mu=g, sd=sigma, observed=df['y_scaled'])
+
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        </section>
+
     </div>
-</div>
 
-<script src="reveal.js/js/reveal.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
 
-<script>
-    // More info about config & dependencies:
-    // - https://github.com/hakimel/reveal.js#configuration
-    // - https://github.com/hakimel/reveal.js#dependencies
-    Reveal.initialize({
-        dependencies: [
-            {src: 'reveal.js/plugin/markdown/marked.js'},
-            {src: 'reveal.js/plugin/markdown/markdown.js'},
-            {src: 'reveal.js/plugin/notes/notes.js', async: true},
-            {src: 'reveal.js/plugin/highlight/highlight.js', async: true}
-        ]
-    });
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            dependencies: [
+                {src: 'reveal.js/plugin/markdown/marked.js'},
+                {src: 'reveal.js/plugin/markdown/markdown.js'},
+                {src: 'reveal.js/plugin/notes/notes.js', async: true},
+                {src: 'reveal.js/plugin/highlight/highlight.js', async: true}
+            ]
+        });
 
-</script>
-<script type="text/x-mathjax-config">
+    </script>
+    <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
       tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']],
                 skipTags: [ 'script', 'noscript', 'style', 'textarea', 'pre' ]},
     });
-</script>
-<script type="text/javascript" async src="MathJax-master/MathJax.js?config=TeX-AMS_HTML-full"></script>
+
+
+    </script>
+    <script type="text/javascript" async src="MathJax-master/MathJax.js?config=TeX-AMS_HTML-full"></script>
 </body>
 </html>

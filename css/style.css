@@ -398,8 +398,38 @@ b.sarimax {
   list-style: none;
 }
 
+@font-face {
+  font-family: mathjax;
+  src: url("../MathJax-master/fonts/HTML-CSS/TeX/woff/MathJax_Main-Regular.woff") format("woff");
+}
 .math-font {
-  font-family: "DejaVu Math TeX Gyre";
+  font-family: "mathjax", "DejaVu Math TeX Gyre";
+}
+
+#dot-product-note {
+  position: relative;
+  left: 100px;
+  top: -190px;
+  font-size: 10px;
+  transform: rotate(-45deg);
+}
+
+i {
+  font-style: italic;
+}
+
+.row-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: stretch;
+}
+
+.slide-vectorized-changepoints-item {
+  margin: 0 60px 0 60px;
+  font-size: 35px;
 }
 
 /*# sourceMappingURL=style.css.map */
