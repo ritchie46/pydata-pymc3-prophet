@@ -50,7 +50,6 @@ $selectionColor: #fff;
 
 .reveal p {
   font-weight: 300;
-  text-shadow: 1px 1px $coal;
 }
 
 .reveal h1,
@@ -143,15 +142,6 @@ i {
   font-style: italic;
 }
 
-//.row-flex {
-//	display: flex;
-//	flex-direction: row;
-//	flex-wrap: nowrap;
-//	justify-content: center;
-//	align-items: baseline;
-//	align-content: stretch;
-//}
-
 .row-flex {
 	display: flex;
 	flex-direction: row;
@@ -170,4 +160,26 @@ i {
   position: fixed;
   height: 200px;
   bottom: 0;
+}
+
+#seasonality-banner {
+  background-color: $xomniaBlue;
+  border-width: 1px;
+  border-color: white;
+  box-shadow: 2px 2px;
+}
+
+.border-me {
+  border: 1px solid white;
+  padding: 16px;
+}
+
+//code blocks
+pre {
+  box-shadow: unset !important;
+  font-size: 12px !important;
+}
+
+.matplotlib {
+  background-color: white !important;
 }

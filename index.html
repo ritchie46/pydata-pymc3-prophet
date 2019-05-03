@@ -176,7 +176,7 @@ $$
             <h4>Changepoints breakdown: <i style="text-transform: none">numpy</i></h4>
             <div class="row-flex" style="width: 100%">
                 <div >
-            	    <pre style="box-shadow: unset; font-size: 12px; width: 100%; ">
+            	    <pre style="width: 100%;">
                         <code class="python" style="overflow: hidden;">
 np.random.seed(25)
 n_changepoints = 10
@@ -214,7 +214,7 @@ trend = growth + offset
                     $$ y| g, \sigma \sim N(g, \sigma) $$
                 </div>
                 <div>
-                                	    <pre style="box-shadow: unset; font-size: 12px; width: 100%; margin-left: 20px">
+                        <pre style="width: 100%; margin-left: 20px">
                         <code class="python" style="overflow: hidden;">
 # * 1 casts the boolean to integers
 A = (t[:, None] > s) * 1
@@ -241,9 +241,80 @@ with pm.Model():
         <section>
             <img src="img/g_t.png" style="background: white">
         </section>
+        <section>
+            <h3>How is this forecasting?</h3>
+        </section>
+        <section data-background-image="img/seasons.jpg">
+            <h1 id="seasonality-banner">Seasonality</h1>
+        </section>
+        <section>
+            <h4>Fourier series</h4>
+            <div>
+                $$ s(t) = \sum_{n=1}^N(a_n cos(\frac{2\pi nt}{P}) + b_n sin(\frac{2 \pi nt}{P})) $$
+            </div>
+            <div class="math-font row-flex">
+                <div style="font-size: 32px; width: 40%; height: 200px;" class="border-me">
+                    $$ \beta \in \mathbb{R}^{2N}$$
+                    $$\beta = a_1, b_1, ..., a_n, b_n $$
+                </div>
 
+                <div style=" width: 40%; height: 200px; margin-left: 20px" class="border-me">
+                <table style="font-size: 35px">
+                    <tr>
+                        <th></th>
+                        <td>weekly<br></td>
+                        <td>yearly<br></td>
+                    </tr>
+                    <tr>
+                        <td>N</td>
+                        <td>3</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>P</td>
+                        <td>365.25</td>
+                        <td>7</td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h4>Fourier series</h4>
+            <div>
+                $$ X(t) = [cos( \frac{2\pi 1t}{7}), \dots, sin(\frac{2\pi nt}{7})] $$
+                $$ s(t) = X(t) \beta $$
+            </div>
+            <div class="math-font" style="font-size: 20px; position: relative; left: 350px; top: 150px;">
+                <p>$\text{rows}: t$</p>
+                <p>$\text{columns}: 2N$</p>
+            </div>
+        </section>
+        <section>
+            <h4>Fourier series</h4>
+            <div class="row-flex">
+            <pre style="width: 45%;">
+                <code class="python">
+np.random.seed(6)
+def fourier_series(t, p, n):
+    # 2 pi n / p
+    x = 2 * np.pi * np.arange(1, n + 1) / p
+    # 2 pi n / p * t
+    x = x * t[:, None]
+    x = np.concatenate((np.cos(x), np.sin(x)), axis=1)
+    return x
+
+n = 10
+t = np.arange(1000)
+beta = np.random.normal(size=2 * n)
+np.dot(fourier_series(t, 365.25, n), beta)
+                </code>
+            </pre>
+                <img src="img/fourier.png" class="matplotlib" style="margin-left: 20px; margin-top: 35px; height: 230px">
+            </div>
+        </section>
     </div>
-
+</div>
     <script src="reveal.js/js/reveal.js"></script>
 
     <script>

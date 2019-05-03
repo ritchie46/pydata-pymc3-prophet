@@ -327,7 +327,6 @@ body {
 }
 .reveal p {
   font-weight: 300;
-  text-shadow: 1px 1px #222;
 }
 
 .reveal h1,
@@ -436,6 +435,27 @@ i {
   position: fixed;
   height: 200px;
   bottom: 0;
+}
+
+#seasonality-banner {
+  background-color: #2D4E9D;
+  border-width: 1px;
+  border-color: white;
+  box-shadow: 2px 2px;
+}
+
+.border-me {
+  border: 1px solid white;
+  padding: 16px;
+}
+
+pre {
+  box-shadow: unset !important;
+  font-size: 12px !important;
+}
+
+.matplotlib {
+  background-color: white !important;
 }
 
 /*# sourceMappingURL=style.css.map */
