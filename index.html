@@ -368,11 +368,35 @@ with pm.Model() as m:
             </div>
         </section>
         <section>
-            <h4>Results</h4>
+            <h4>Results (after a coffee break)</h4>
+
             <img src="img/fit.png" style="height: 590px;">
         </section>
         <section>
             <h4>Trend forecast & uncertainty</h4>
+            <br>
+            <div style="font-size: 30px">
+                $$
+                    \forall j > T,
+                    \begin{cases}
+                        \delta_j = 0 \quad w.p. \frac{T - S}{T} \\
+                        \delta_j \sim Laplace(0, \lambda) \quad w.p. \frac{S}{T}
+                    \end{cases}
+                $$
+            </div>
+        </section>
+        <section>
+            <h4>Trend forecast & uncertainty</h4>
+            <img src="img/forecast.png" class="matplotlib">
+        </section>
+        <section>
+            <h4>Last words</h4>
+            <br>
+            <ul class="math-font" style="font-size: 30px">
+                <li>Additional effects can be added (holidays, temperature, precipitation)</li>
+                <li>Ability to regularize because of priors</li>
+                <li>Q&A</li>
+            </ul>
         </section>
     </div>
 </div>
