@@ -313,6 +313,67 @@ np.dot(fourier_series(t, 365.25, n), beta)
                 <img src="img/fourier.png" class="matplotlib" style="margin-left: 20px; margin-top: 35px; height: 230px">
             </div>
         </section>
+        <section>
+            <h4>Fourier series (helper function)</h4>
+            <pre>
+                <code class="python">
+def seasonality_model(m, df, period='yearly', seasonality_prior_scale=10):
+    if period == 'yearly':
+        n = 10
+        # rescale the period, as t is also scaled
+        p = 365.25 / (df['ds'].max() - df['ds'].min()).days
+    else:  # weekly
+        n = 3
+        # rescale the period, as t is also scaled
+        p = 7 / (df['ds'].max() - df['ds'].min()).days
+    x = fourier_series(df['t'], p, n)
+    with m:
+        beta = pm.Normal(f'beta_{period}', mu=0, sd=seasonality_prior_scale, shape=2 * n)
+    return x, beta
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h4>Complete model (w/o holiday effects)</h4>
+            <div style="font-size: 25px">
+                $$y(t) = g(t) + s(t)_\text{weekly} + s(t)_\text{yearly} + \epsilon_t $$
+            </div>
+            <div class="row-flex">
+                <div style="font-size: 25px">
+                    $$ \beta \sim N(0, 10) $$
+                    $$ s|\beta = X(t)\beta $$
+                    $$ \sigma \sim HalfCauchy(0, 0.5) $$
+                    $$ y|g, s, \sigma \sim N(g + s, \sigma) $$
+                </div>
+
+                <pre style="width: 60%;">
+                    <code class="python">
+with pm.Model() as m:
+    # changepoints_prior_scale is None, so the exponential distribution
+    # will be used as prior on \tau.
+    y, A, s = trend_model(m, df['t'], changepoints_prior_scale=None)
+    x_yearly, beta_yearly = seasonality_model(m, df, 'yearly')
+    x_weekly, beta_weekly = seasonality_model(m, df, 'weekly')
+
+    y += det_dot(x_yearly, beta_yearly) + det_dot(x_weekly, beta_weekly)
+
+    sigma = pm.HalfCauchy('sigma', 0.5, testval=1)
+    obs = pm.Normal('obs',
+                 mu=y,
+                 sd=sigma,
+                 observed=df['y_scaled'])
+                    </code>
+                </pre>
+
+            </div>
+        </section>
+        <section>
+            <h4>Results</h4>
+            <img src="img/fit.png" style="height: 590px;">
+        </section>
+        <section>
+            <h4>Trend forecast & uncertainty</h4>
+        </section>
     </div>
 </div>
     <script src="reveal.js/js/reveal.js"></script>
