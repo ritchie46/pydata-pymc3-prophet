@@ -26,17 +26,21 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h2># Facebook's Prophet in PyMC3</h2>
-            <h4>Ritchie Vink</h4>
-            <img src="img/xomnia_logo.svg" height="200px" style="border: none; background: none; box-shadow: none">
+            <h4># Facebook's Prophet in PyMC3</h4>
+            <h4 style="font-size: 30px;">Ritchie Vink</h4>
+
+            <img src="img/xomnia_logo.svg" height="200px" style="border: none;
+            background: none; box-shadow: none; margin-top: 150px">
+            <h4 style="font-size: 20px; position: relative; top: -85px;">Data scientist/ data engineer</h4>
         </section>
         <section>
             <h4>About this presentation</h4>
             <br>
             <h4 style="font-size: 25px">Download slides/ read blog post</h4>
             <ul class="math-font" style="font-size: 20px">
-                <li>https://github.com/ritchie46/pydata-pymc3-prophet</li>
-                <li>https://www.ritchievink.com/</li>
+                <li>https://github.com/ritchie46/pydata-pymc3-prophet&nbsp;&nbsp;&nbsp;<b>(slides)</b></li>
+                <li>https://www.ritchievink.com/&nbsp;&nbsp;&nbsp;<b>(blog post)</b></li>
+                <li>https://peerj.com/preprints/3190.pdf&nbsp;&nbsp;&nbsp;<b>(paper)</b></li>
             </ul>
             <br>
             <br>
@@ -97,16 +101,27 @@
             </div>
         </section>
         <section>
+            <h4>Bayesian in a nutshell</h4>
+            <pre>
+                <code class="python">
+m = stats.norm(190, 5)
+h = np.linspace(150, 210, num=150)
+
+prior = m.pdf(h)
+likelihood = np.array([stats.norm(h_i, 5).pdf([165, 170]) for h_i in h]).prod(1)
+unnormalized_posterior = prior * likelihood
+posterior = unnormalized_posterior / unnormalized_posterior.sum()
+                </code>
+            </pre>
+            <img src="img/bayes_nutshell.png" class="matplotlib">
+        </section>
+        <section>
             <h4>Changepoints $g(t)$</h4>
             <img src="img/ts-changepoint.png">
         </section>
         <section>
             <h4>Changepoints breakdown</h4>
 
-            <div>
-                $$ g(t) = \underbrace{(k + a(t)^T \delta)t}_\text{trend} + \underbrace{(m + a(t)^T
-                \gamma)}_\text{offset} $$
-            </div>
             <ul>
                 <li>$k _\text{ base trend}$</li>
                 <li>$\delta _\text{ growth rate adjustments}$</li>
@@ -126,12 +141,13 @@
                 for every timestep $t$:
                 <br>
                 <br>
-                $$ k + \sum_{j: t > s_j} \delta_j $$
+                $$ (k + \sum_{j: t > s_j} \delta_j)t $$
                 <div id="dot-product-note">dot product</div>
             </div>
         </section>
         <section>
             <h4>Changepoints breakdown: <i>vectorized</i></h4>
+            <p class="math-font">For a single time step $t$</p>
             <div class="row-flex">
                 <div class="slide-vectorized-changepoints-item">
                     $$ a(t) \in \{0, 1\}^S$$
@@ -187,6 +203,13 @@
 $$
             </div>
 
+        </section>
+        <section>
+            <h4>Changepoints breakdown</h4>
+            <div>
+                $$ g(t) = \underbrace{(k + a(t)^T \delta)t}_\text{trend} + \underbrace{(m + a(t)^T
+                \gamma)}_\text{offset} $$
+            </div>
         </section>
         <section >
             <h4>Changepoints breakdown: <i style="text-transform: none">numpy</i></h4>
@@ -278,13 +301,13 @@ with pm.Model():
                 <table style="font-size: 35px">
                     <tr>
                         <th></th>
-                        <td>weekly<br></td>
                         <td>yearly<br></td>
+                        <td>weekly<br></td>
                     </tr>
                     <tr>
                         <td>N</td>
-                        <td>3</td>
                         <td>10</td>
+                        <td>3</td>
                     </tr>
                     <tr>
                         <td>P</td>
@@ -356,6 +379,8 @@ def seasonality_model(m, df, period='yearly', seasonality_prior_scale=10):
             </div>
             <div class="row-flex">
                 <div style="font-size: 25px">
+
+                    $$ g \sim \text{trend model} $$
                     $$ \beta \sim N(0, 10) $$
                     $$ s|\beta = X(t)\beta $$
                     $$ \sigma \sim HalfCauchy(0, 0.5) $$
@@ -371,7 +396,7 @@ with pm.Model() as m:
     x_yearly, beta_yearly = seasonality_model(m, df, 'yearly')
     x_weekly, beta_weekly = seasonality_model(m, df, 'weekly')
 
-    y += det_dot(x_yearly, beta_yearly) + det_dot(x_weekly, beta_weekly)
+    y += tt.dot(x_yearly, beta_yearly) + det_dot(x_weekly, beta_weekly)
 
     sigma = pm.HalfCauchy('sigma', 0.5, testval=1)
     obs = pm.Normal('obs',
@@ -382,6 +407,10 @@ with pm.Model() as m:
                 </pre>
 
             </div>
+        </section>
+        <section>
+            <h4>Sampling...</h4>
+            <img src="img/sample_result.png" class="matplotlib" height="500px">
         </section>
         <section>
             <h4>Results (after a coffee break)</h4>
