@@ -104,7 +104,7 @@
             <img src="img/PyMC3_banner.svg" class="logo-left-top" style="background: white;" width="200px"/>
             <h4 class="lower-title">Bayesian in a nutshell</h4>
             <pre>
-                <code class="python" style="font-size: 15px;">
+                <code class="python">
 m = stats.norm(190, 5)
 h = np.linspace(150, 210, num=150)
 
@@ -120,7 +120,7 @@ posterior = unnormalized_posterior / unnormalized_posterior.sum()
             <img src="img/PyMC3_banner.svg" class="logo-left-top" style="background: white;" width="200px"/>
             <h4 class="lower-title">PyMC3 in a nutshell</h4>
             <pre>
-                <code class="python" style="font-size: 15px">
+                <code class="python">
 with pm.Model() as m:
     mu = pm.Normal('mu', 190, 5)
     pm.Normal('likelihood', mu, 5, observed=[165, 170])
@@ -222,8 +222,8 @@ $$
         <section>
             <h4>Changepoints breakdown</h4>
             <div>
-                $$ g(t) = \underbrace{(k + a(t)^T \delta)t}_\text{trend} + \underbrace{(m + a(t)^T
-                \gamma)}_\text{offset} $$
+                $$ g(t) = \underbrace{(k + A \delta)t}_\text{trend} + \underbrace{(m + A
+                (-s\delta)}_\text{offset} $$
             </div>
         </section>
         <section >
@@ -243,8 +243,7 @@ k = 1
 m = 5
 
 growth = (k + np.dot(A, delta)) * t
-gamma = -s * delta
-offset = m + np.dot(A, gamma)
+offset = m + np.dot(A, -s * delta)
 trend = growth + offset
 
                         </code>
