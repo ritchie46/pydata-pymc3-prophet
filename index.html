@@ -100,10 +100,11 @@
                 { \underbrace{P(D)}_{\text{marginal likelihood}} }$$
             </div>
         </section>
-        <section>
-            <h4>Bayesian in a nutshell</h4>
+        <section class="fill-parent">
+            <img src="img/PyMC3_banner.svg" class="logo-left-top" style="background: white;" width="200px"/>
+            <h4 class="lower-title">Bayesian in a nutshell</h4>
             <pre>
-                <code class="python">
+                <code class="python" style="font-size: 15px;">
 m = stats.norm(190, 5)
 h = np.linspace(150, 210, num=150)
 
@@ -114,6 +115,19 @@ posterior = unnormalized_posterior / unnormalized_posterior.sum()
                 </code>
             </pre>
             <img src="img/bayes_nutshell.png" class="matplotlib">
+        </section>
+        <section class="fill-parent">
+            <img src="img/PyMC3_banner.svg" class="logo-left-top" style="background: white;" width="200px"/>
+            <h4 class="lower-title">PyMC3 in a nutshell</h4>
+            <pre>
+                <code class="python" style="font-size: 15px">
+with pm.Model() as m:
+    mu = pm.Normal('mu', 190, 5)
+    pm.Normal('likelihood', mu, 5, observed=[165, 170])
+    trace = pm.sample(10000)
+                </code>
+            </pre>
+            <img src="img/pymc3_nutshell.png" class="matplotlib" height="250px">
         </section>
         <section>
             <h4>Changepoints $g(t)$</h4>
