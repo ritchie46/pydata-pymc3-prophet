@@ -251,15 +251,15 @@ trend = growth + offset
                     </pre>
                 </div>
                 <div>
-                    <img src="img/piecewise-trend.png" style="height: 250px; width: 700px;
-                    position: relative; top: 20px; margin-left: 40px">
+                    <img src="img/piecewise-trend.png" style="height: 300px; width: 700px;
+                    position: relative; top: 25px; margin-left: 40px">
                 </div>
             </div>
         </section>
         <section>
             <h4>Changepoints breakdown: <i style="text-transform: none">PyMC3</i></h4>
             <div class="row-flex">
-                <div style="font-size: 20px">
+                <div style="font-size: 20px; margin-top: 50px">
                     $$ k \sim N(0, 5) $$
                     $$ \delta \sim Laplace(0, 0.05) $$
                     $$ m \sim N(0, 5) $$
@@ -347,7 +347,7 @@ with pm.Model():
         <section>
             <h4>Fourier series</h4>
             <div class="row-flex">
-            <pre style="width: 45%;">
+            <pre style="width: 52%;">
                 <code class="python">
 np.random.seed(6)
 def fourier_series(t, p, n):
@@ -364,7 +364,7 @@ beta = np.random.normal(size=2 * n)
 np.dot(fourier_series(t, 365.25, n), beta)
                 </code>
             </pre>
-                <img src="img/fourier.png" class="matplotlib" style="margin-left: 20px; margin-top: 35px; height: 230px">
+                <img src="img/fourier.png" class="matplotlib" style="margin-left: 20px; margin-top: 40px; height: 270px">
             </div>
         </section>
         <section>
@@ -393,7 +393,7 @@ def seasonality_model(m, df, period='yearly', seasonality_prior_scale=10):
                 $$y(t) = g(t) + s(t)_\text{weekly} + s(t)_\text{yearly} + \epsilon_t $$
             </div>
             <div class="row-flex">
-                <div style="font-size: 25px">
+                <div style="font-size: 25px; margin-top: 30px">
 
                     $$ g \sim \text{trend model} $$
                     $$ \beta \sim N(0, 10) $$
@@ -402,7 +402,7 @@ def seasonality_model(m, df, period='yearly', seasonality_prior_scale=10):
                     $$ y|g, s, \sigma \sim N(g + s, \sigma) $$
                 </div>
 
-                <pre style="width: 60%;">
+                <pre style="width: 68%; margin-left: 20px">
                     <code class="python">
 with pm.Model() as m:
     # changepoints_prior_scale is None, so the exponential distribution
