@@ -247,7 +247,7 @@ n_changepoints = 10
 t = np.arange(1000)
 s = np.sort(np.random.choice(t, n_changepoints, replace=False))
 
-A = (t[:, None] > s) * 1
+A = (t[:, None] > s)
 delta = np.random.normal(size=n_changepoints)
 k = 1
 m = 5
@@ -279,8 +279,7 @@ trend = growth + offset
                 <div>
                         <pre style="width: 100%; margin-left: 20px">
                         <code class="python" style="overflow: hidden;">
-# * 1 casts the boolean to integers
-A = (t[:, None] > s) * 1
+A = (t[:, None] > s)
 
 with pm.Model():
     # initial growth
