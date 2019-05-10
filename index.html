@@ -295,7 +295,6 @@ with pm.Model():
     g = (k + tt.dot(A, delta)) * t + (m + tt.dot(A, gamma))
     sigma = pm.HalfCauchy('sigma', 0.5)
     observed =  pm.Normal('obs', mu=g, sd=sigma, observed=df['y_scaled'])
-
                         </code>
                     </pre>
                 </div>
@@ -380,7 +379,7 @@ np.dot(fourier_series(t, 365.25, n), beta)
             </div>
         </section>
         <section>
-            <h4>Fourier series (helper function)</h4>
+            <h4>Fourier series <i style="text-transform: none">(helper function)</i></h4>
             <pre>
                 <code class="python">
 def seasonality_model(m, df, period='yearly', seasonality_prior_scale=10):
@@ -400,7 +399,7 @@ def seasonality_model(m, df, period='yearly', seasonality_prior_scale=10):
             </pre>
         </section>
         <section>
-            <h4>Complete model (w/o holiday effects)</h4>
+            <h4>Complete model <i style="text-transform: none">(w/o holiday effects)</i></h4>
             <div style="font-size: 25px">
                 $$y(t) = g(t) + s(t)_\text{weekly} + s(t)_\text{yearly} + \epsilon_t $$
             </div>
@@ -440,7 +439,7 @@ with pm.Model() as m:
             <img src="img/sample_result.png" class="matplotlib" height="500px">
         </section>
         <section>
-            <h4>Results (after a coffee break)</h4>
+            <h4>Results <i style="text-transform: none">(after a coffee break)</i></h4>
 
             <img src="img/fit.png" style="height: 590px;">
         </section>
