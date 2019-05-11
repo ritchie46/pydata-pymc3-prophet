@@ -156,7 +156,7 @@ with pm.Model() as m:
             <h4>Changepoints breakdown</h4>
             <br>
             <ul class="no-bullet math-font">
-                <li>Changepoints in vector <span style="padding-left:6em">$S$</span></li>
+                <li>Number of changepoints <span style="padding-left:6em">$S$</span></li>
                 <li>Growth change adjustment vector <span style="padding-left:0.5em">$\delta \in \mathbb{R}^S$</span>
                 </li>
             </ul>
@@ -314,6 +314,11 @@ with pm.Model():
             <div>
                 $$ s(t) = \sum_{n=1}^N(a_n cos(\frac{2\pi nt}{P}) + b_n sin(\frac{2 \pi nt}{P})) $$
             </div>
+            <ul class="math-font" style="font-size: 25px">
+                <li>$N:$ order of Fourier series</li>
+                <li>$P:$ Period</li>
+                <li>$a_n, b_n:$ Learnable scale parameters</li>
+            </ul>
         </section>
         <section>
             <h4>Fourier series</h4>
